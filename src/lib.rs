@@ -188,6 +188,34 @@ fn get_trade_instruction(
 
     let mut result = None;
     match dapp_address.as_str() {
+        "CLMM9tUoggJu2wagPkkqs9eFG4BWhVBZWkP1qv3Sp7tR" => {
+            result =
+                dapps::dapp_CLMM9tUoggJu2wagPkkqs9eFG4BWhVBZWkP1qv3Sp7tR::parse_trade_instruction(
+                    instruction_data,
+                    input_accounts,
+                );
+        }
+        "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" => {
+            result =
+                dapps::dapp_Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB::parse_trade_instruction(
+                    instruction_data,
+                    input_accounts,
+                );
+        }
+        "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc" => {
+            result =
+                dapps::dapp_whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc::parse_trade_instruction(
+                    instruction_data,
+                    input_accounts,
+                );
+        }
+        "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" => {
+            result =
+                dapps::dapp_CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK::parse_trade_instruction(
+                    instruction_data,
+                    input_accounts,
+                );
+        }
         "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" => {
             result =
                 dapps::dapp_675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8::parse_trade_instruction(
@@ -197,6 +225,21 @@ fn get_trade_instruction(
                     accounts,
                 );
         }
+        "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" => {
+            result =
+                dapps::dapp_LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo::parse_trade_instruction(
+                    instruction_data,
+                    input_accounts,
+                );
+        }
+        "9W959DqEETiGZocYWCQPaJ6sBmUzgfxXfqGeTEdp3aQP" => {
+            result =
+                dapps::dapp_9W959DqEETiGZocYWCQPaJ6sBmUzgfxXfqGeTEdp3aQP::parse_trade_instruction(
+                    instruction_data,
+                    input_accounts,
+                );
+        }
+
         _ => {}
     }
 
