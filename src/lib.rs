@@ -30,7 +30,6 @@ fn solana_dex_database_changes(block: Block) -> Result<DatabaseChanges, substrea
     changes.table_changes.extend(trades_table_changes(&block)?);
     Ok(changes)
 }
-
 fn process_block(block: Block) -> Result<Output, substreams::errors::Error> {
     let slot = block.slot;
     let parent_slot = block.parent_slot;
@@ -430,6 +429,12 @@ fn trades_table_changes(block: &Block) -> Result<Vec<TableChange>, substreams::e
                 to_amount = last_swap.quote_amount.abs();
             }
 
+            if from_mint != &"So11111111111111111111111111111111111111112".to_string()
+                && to_mint != &"So11111111111111111111111111111111111111112".to_string()
+            {
+                continue;
+            }
+
             // Construct a single swap result
             let swap_result = TradeData {
                 block_date: convert_to_date(timestamp),
@@ -466,15 +471,15 @@ fn trades_table_changes(block: &Block) -> Result<Vec<TableChange>, substreams::e
                     ],
                 )
                 .set("program_id", swap_result.outer_program.clone())
-                .set("block_slot", swap_result.block_slot)
-                .set("block_time", swap_result.block_time)
+                .set("block_slot", swap_result.block_slot as i64)
+                .set("block_time", swap_result.block_time as i64)
                 .set("signer", swap_result.signer.clone())
                 .set("in_mint", swap_result.base_mint.clone())
                 .set("out_mint", swap_result.quote_mint.clone())
                 .set("in_amount", swap_result.base_amount as i64)
                 .set("out_amount", swap_result.quote_amount as i64)
-                .set("txn_fee", swap_result.txn_fee)
-                .set("signer_sol_change", swap_result.signer_sol_change);
+                .set("txn_fee", swap_result.txn_fee as i64)
+                .set("signer_sol_change", swap_result.signer_sol_change as i64);
         }
     }
 
