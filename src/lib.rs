@@ -30,6 +30,7 @@ fn solana_dex_database_changes(block: Block) -> Result<DatabaseChanges, substrea
     changes.table_changes.extend(trades_table_changes(&block)?);
     Ok(changes)
 }
+
 fn process_block(block: Block) -> Result<Output, substreams::errors::Error> {
     let slot = block.slot;
     let parent_slot = block.parent_slot;
@@ -461,6 +462,7 @@ fn trades_table_changes(block: &Block) -> Result<Vec<TableChange>, substreams::e
                     &meta.post_balances,
                 ),
             };
+            let block_time_date = convert_to_date(swap_result.block_time);
             tables
                 .create_row(
                     "dex_trades",
@@ -471,15 +473,16 @@ fn trades_table_changes(block: &Block) -> Result<Vec<TableChange>, substreams::e
                     ],
                 )
                 .set("program_id", swap_result.outer_program.clone())
-                .set("block_slot", swap_result.block_slot as i64)
-                .set("block_time", swap_result.block_time as i64)
+                .set("block_slot", swap_result.block_slot)
+                .set("block_time", swap_result.block_time)
+                .set("block_time_date", block_time_date)
                 .set("signer", swap_result.signer.clone())
                 .set("in_mint", swap_result.base_mint.clone())
                 .set("out_mint", swap_result.quote_mint.clone())
                 .set("in_amount", swap_result.base_amount as i64)
                 .set("out_amount", swap_result.quote_amount as i64)
-                .set("txn_fee", swap_result.txn_fee as i64)
-                .set("signer_sol_change", swap_result.signer_sol_change as i64);
+                .set("txn_fee", swap_result.txn_fee)
+                .set("signer_sol_change", swap_result.signer_sol_change);
         }
     }
 
@@ -822,7 +825,7 @@ fn get_amt(
 }
 
 fn get_signer_balance_change(pre_balances: &Vec<u64>, post_balances: &Vec<u64>) -> i64 {
-    return (post_balances[0] - pre_balances[0]) as i64;
+    return (pre_balances[0] - post_balances[0]) as i64;
 }
 
 fn filter_inner_instructions(
