@@ -16,7 +16,7 @@ CREATE TABLE dex_trades
     signer_sol_change Float64
 )
 ENGINE = MergeTree
-PARTITION BY toYYYYMMDD(block_time)
+PARTITION BY toYYYYMMDD(block_time_date)
 PRIMARY KEY (signer, block_time, signature)
 ORDER BY (signer, block_time, signature, in_mint, out_amount)
 SETTINGS index_granularity = 8192;

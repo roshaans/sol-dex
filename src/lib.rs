@@ -12,8 +12,8 @@ use substreams_database_change::pb::database::{DatabaseChanges, TableChange};
 use substreams_database_change::tables::Tables;
 use substreams_solana::pb::sf::solana::r#type::v1::InnerInstructions;
 use substreams_solana::pb::sf::solana::r#type::v1::{Block, TokenBalance};
-use utils::convert_to_date;
 use utils::get_mint;
+use utils::{convert_to_date, convert_to_date_time};
 mod trade_instruction;
 
 #[substreams::handlers::map]
@@ -462,7 +462,7 @@ fn trades_table_changes(block: &Block) -> Result<Vec<TableChange>, substreams::e
                     &meta.post_balances,
                 ),
             };
-            let block_time_date = convert_to_date(swap_result.block_time);
+            let block_time_date = convert_to_date_time(swap_result.block_time);
             tables
                 .create_row(
                     "dex_trades",

@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: 'sol_tx_streamer_sink'
-  version: v1.0.21
+  version: v1.0.22
 
 imports:
   sql: https://github.com/streamingfast/substreams-sink-sql/releases/download/protodefs-v1.0.7/substreams-sink-sql-protodefs-v1.0.7.spkg
