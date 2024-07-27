@@ -825,7 +825,7 @@ fn get_amt(
 }
 
 fn get_signer_balance_change(pre_balances: &Vec<u64>, post_balances: &Vec<u64>) -> i64 {
-    return (pre_balances[0] - post_balances[0]) as i64;
+    return (post_balances[0] - pre_balances[0]) as i64;
 }
 
 fn filter_inner_instructions(
